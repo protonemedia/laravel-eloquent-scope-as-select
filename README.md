@@ -131,7 +131,7 @@ $posts = Post::addScopeAsSelect('is_published', function ($query) {
 })->get();
 ```
 
-With short closures, which was introduced in PHP 7.4, this can be even shorter:
+With short closures, a feature which was introduced in PHP 7.4, this can be even shorter:
 
 ```php
 $posts = Post::addScopeAsSelect('is_published', fn ($query) => $query->published())->get();
