@@ -33,7 +33,7 @@ You can install the package via composer:
 composer require protonemedia/laravel-eloquent-scope-as-select
 ```
 
-Add the `macro` to the query builder, for example in your `AppServiceProvider`:
+Add the `macro` to the query builder, for example, in your `AppServiceProvider`:
 
 
 ```php
@@ -79,7 +79,7 @@ Post::get()->each(function (Post $post) {
 });
 ```
 
-This is harder to achieve when scopes get more complex, or when you chain various scopes. Let's add a relationship and another scope to the `Post` model:
+This is harder to achieve when scopes get more complicated or when you chain various scopes. Let's add a relationship and another scope to the `Post` model:
 
 ```php
 class Post extends Model
@@ -101,7 +101,7 @@ class Post extends Model
 }
 ```
 
-Using Eloquent, we can fetch all posts from this year with at least 10 comments.
+Using Eloquent, we can fetch all posts from this year with at least ten comments.
 
 ```php
 $recentPopularPosts = Post::query()
@@ -110,7 +110,7 @@ $recentPopularPosts = Post::query()
     ->get();
 ```
 
-Great! Now we want to fetch all posts again, and then check if the post was published this year and has at least 10 comments.
+Great! Now we want to fetch all posts again, and then check if the post was published this year and has at least ten comments.
 
 ```php
 Post::get()->each(function (Post $post) {
@@ -145,7 +145,7 @@ $posts->each(function (Post $post) {
 });
 ```
 
-You can add multiple selects as well, for example to combine both scenarios:
+You can add multiple selects as well, for example, to combine both scenarios:
 
 ```php
 Post::query()
