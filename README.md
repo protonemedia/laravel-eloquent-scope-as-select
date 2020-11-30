@@ -6,7 +6,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/protonemedia/laravel-eloquent-scope-as-select.svg?style=flat-square)](https://packagist.org/packages/protonemedia/laravel-eloquent-scope-as-select)
 [![Buy us a tree](https://img.shields.io/badge/Treeware-%F0%9F%8C%B3-lightgreen)](https://plant.treeware.earth/protonemedia/laravel-eloquent-scope-as-select)
 
-[Related tweet](https://twitter.com/pascalbaljet/status/1333162093319757828)
+Stop duplicating your Eloquent query scopes and constraints in PHP. This package lets you re-use your query scopes and constraints by adding them as a subquery.
 
 ## Requirements
 
