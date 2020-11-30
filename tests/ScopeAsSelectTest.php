@@ -11,9 +11,7 @@ class ScopeAsSelectTest extends TestCase
         $postB = Post::create(['title' => 'bar']);
 
         $posts = Post::query()
-            ->addScopeAsSelect('title_is_foo', function ($query) {
-                $query->titleIsFoo();
-            })
+            ->addScopeAsSelect('title_is_foo', fn ($query) => $query->titleIsFoo())
             ->orderBy('id')
             ->get();
 

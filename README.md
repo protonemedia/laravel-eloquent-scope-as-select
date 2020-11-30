@@ -16,11 +16,14 @@
 
 ## Features
 
+* Add a subquery based on a [query scope](https://laravel.com/docs/8.x/eloquent#query-scopes)
+* Add a subquery using a Closure
+* Support more than one subquery
 * Zero third-party dependencies
 
 ## Blogpost
 
-If you want to know more about the background of this package, please read [the blogpost](https://protone.media/blog/search-through-multiple-eloquent-models-with-our-latest-laravel-package).
+[Coming soon!](https://protone.media/en/blog)
 
 ## Installation
 
@@ -30,21 +33,53 @@ You can install the package via composer:
 composer require protonemedia/laravel-eloquent-scope-as-select
 ```
 
-## Usage
+Add the `macro` to the query builder, for example in your `AppServiceProvider`:
 
-In your `AppServiceProvider`:
 
 ```php
 use ProtoneMedia\LaravelEloquentScopeAsSelect\ScopeAsSelect;
 
-ScopeAsSelect::addMacro();
-
-// or
-
-ScopeAsSelect::addMacro('customMacroName');
+public function boot()
+{
+    ScopeAsSelect::addMacro();
+}
 ```
 
-Post model example:
+By default, the name of the macro is `addScopeAsSelect`, but you can customize it with the first parameter of the `addMacro` method:
+
+```php
+ScopeAsSelect::addMacro('withScopeAsSubQuery');
+```
+
+## Usage
+
+Imagine you have a `Post` Eloquent model with a query scope.
+
+```php
+class Post extends Model
+{
+    public function scopePublished($query)
+    {
+        return $query->whereNotNull('published_at');
+    }
+}
+```
+
+Now you can fetch all published posts by calling the scope method on the query:
+
+```php
+$allPublishedPosts = Post::published()->get();
+```
+
+But what if you want to fetch *all* posts and *then* check if the post is published? This scope is quite simple, so you can easily mimic the scope's outcome by checking the `published_at` attribute:
+
+```php
+Posts::get()->each(function(Post $post) {
+    $isPublished = !is_null($post->published_at);
+});
+```
+
+This is harder to achieve when scopes get more complex, or when you chain various scopes. Let's add a relationship and another scope to the `Post` model:
 
 ```php
 class Post extends Model
@@ -54,51 +89,69 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function scopeHasFiveCommentsOrMore($query)
+    public function scopePublishedInCurrentYear($query)
     {
-        $query->has('comments', '>=', 5);
+        return $query->whereYear('published_at', date('Y'));
     }
 }
 ```
 
-```php
-$postsWithAtLeastFiveComments = Post::hasFiveCommentsOrMore()->get();
-```
-
-Select all `Post` records and add the scope as a select:
+Using Eloquent, we can fetch all posts from this year with at least 10 comments.
 
 ```php
-$allPosts = Post::query()
-    ->addScopeAsSelect('has_five_comments_or_more', function ($query) {
-        $query->hasFiveCommentsOrMore();
-    })
-    ->get();
-
-$postsWithAtLeastFiveComments = $allPosts->filter->has_five_comments_or_more;
+$recentPopularPosts = Post::query()->publishedInCurrentYear()->has('comments', '>=', 10)->get();
 ```
 
-It works with inline query constraints as well:
+Great! Now we want to fetch all posts again, and then check if the post was published this year and has at least 10 comments.
+
+```php
+Posts::get()->each(function(Post $post) {
+    $isRecentAndPopular = $post->comments()->count() >= 10 && optional($post->published_at)->isCurrentYear();
+});
+```
+
+Well, you get the idea. This is bound to get messy and you're duplicating logic as well.
+
+### Solution
+
+Using the power of this package, you can re-use your scopes when fetching data. The first example (`published` scope) can be narrowed down to:
+
+```php
+$posts = Post::addScopeAsSelect('is_published', function ($query) {
+    $query->published();
+})->get();
+```
+
+With short closures, which was introduced in PHP 7.4, this can be even shorter:
+
+```php
+$posts = Post::addScopeAsSelect('is_published', fn ($query) => $query->published())->get();
+```
+
+Now every `Post` model will have an `is_published` boolean attribute.
+
+```php
+$posts->each(function(Post $post) {
+    $isPublished = $post->is_published;
+});
+```
+
+You can add multiple selects as well, for example to combine both scenarios:
 
 ```php
 Post::query()
-    ->addScopeAsSelect('title_is_foo_and_has_five_comments_or_more', function ($query) {
-        $query->where('title', 'foo')->has('comments', '>=', 5);
+    ->addScopeAsSelect('is_published', function ($query) {
+        $query->published();
     })
-    ->orderBy('id')
-    ->get();
-```
+    ->addScopeAsSelect('is_recent_and_popular', function ($query) {
+        $query->publishedInCurrentYear()->has('comments', '>=', 10);
+    })
+    ->get()
+    ->each(function(Post $post) {
+        $isPublished = $post->is_published;
 
-You can add multiple selects:
-
-```php
-$allPosts = Post::query()
-    ->addScopeAsSelect('title_is_foo', function ($query) {
-        $query->where('title', 'foo');
-    })
-    ->addScopeAsSelect('has_five_comments_or_more', function ($query) {
-        $query->hasFiveCommentsOrMore();
-    })
-    ->get();
+        $isRecentAndPopular = $post->is_recent_and_popular;
+    });
 ```
 
 ### Testing
@@ -119,6 +172,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 * [`Laravel Analytics Event Tracking`](https://github.com/protonemedia/laravel-analytics-event-tracking): Laravel package to easily send events to Google Analytics.
 * [`Laravel Blade On Demand`](https://github.com/protonemedia/laravel-blade-on-demand): Laravel package to compile Blade templates in memory.
+* [`Laravel Cross Eloquent Search`](https://github.com/protonemedia/laravel-cross-eloquent-search): Laravel package to search through multiple Eloquent models.
 * [`Laravel FFMpeg`](https://github.com/protonemedia/laravel-ffmpeg): This package provides an integration with FFmpeg for Laravel. The storage of the files is handled by Laravel's Filesystem.
 * [`Laravel Form Components`](https://github.com/protonemedia/laravel-form-components): Blade components to rapidly build forms with Tailwind CSS Custom Forms and Bootstrap 4. Supports validation, model binding, default values, translations, includes default vendor styling and fully customizable!
 * [`Laravel Paddle`](https://github.com/protonemedia/laravel-paddle): Paddle.com API integration for Laravel with support for webhooks/events.
