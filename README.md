@@ -104,14 +104,18 @@ class Post extends Model
 Using Eloquent, we can fetch all posts from this year with at least 10 comments.
 
 ```php
-$recentPopularPosts = Post::query()->publishedInCurrentYear()->has('comments', '>=', 10)->get();
+$recentPopularPosts = Post::query()
+    ->publishedInCurrentYear()
+    ->has('comments', '>=', 10)
+    ->get();
 ```
 
 Great! Now we want to fetch all posts again, and then check if the post was published this year and has at least 10 comments.
 
 ```php
 Post::get()->each(function (Post $post) {
-    $isRecentAndPopular = $post->comments()->count() >= 10 && optional($post->published_at)->isCurrentYear();
+    $isRecentAndPopular = $post->comments()->count() >= 10
+        && optional($post->published_at)->isCurrentYear();
 });
 ```
 
