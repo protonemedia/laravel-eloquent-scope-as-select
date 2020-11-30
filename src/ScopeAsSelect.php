@@ -35,13 +35,11 @@ class ScopeAsSelect
                 ->select(DB::raw(1))
                 ->whereColumn($aliasedModel->getQualifiedKeyName(), $query->getModel()->getQualifiedKeyName())
                 ->limit(1)
-                ->tap(function ($query) use ($callable) {
-                    return $callable($query);
-                });
+                ->tap(fn ($query) => $callable($query));
 
-            return $query->withCasts([
-                $name => NullableBooleanCaster::class,
-            ])->addSelect([$name => $subSelect]);
+            return $query
+                ->addSelect([$name => $subSelect])
+                ->withCasts([$name => NullableBooleanCaster::class]);
         });
     }
 }
