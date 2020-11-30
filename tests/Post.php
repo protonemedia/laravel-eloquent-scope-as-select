@@ -15,4 +15,9 @@ class Post extends Model
     {
         $query->where($query->qualifyColumn('title'), 'foo');
     }
+
+    public function scopeHasSixOrMoreComments($query)
+    {
+        $query->has('comments', '>=', 6);
+    }
 }

@@ -32,7 +32,52 @@ composer require protonemedia/laravel-eloquent-scope-as-select
 
 ## Usage
 
-...
+In your `AppServiceProvider`:
+
+```php
+use ProtoneMedia\LaravelEloquentScopeAsSelect\ScopeAsSelect;
+
+ScopeAsSelect::addMacro();
+
+// or
+
+ScopeAsSelect::addMacro('customMacroName');
+```
+
+Post model example:
+
+```php
+class Post extends Model
+{
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function scopeHasFiveCommentsOrMore($query)
+    {
+        $query->has('comments', '>=', 5);
+    }
+}
+```
+
+```php
+$postsWithAtLeastFiveComments = Post::hasFiveCommentsOrMore()->get();
+```
+
+Select all `Post` records and add the scope as a select:
+
+```php
+$allPosts = Post::query()
+    ->addScopeAsSelect('has_five_comments_or_more', function ($query) {
+        $query->hasFiveCommentsOrMore();
+    })
+    ->get();
+
+$postsWithAtLeastFiveComments = $allPosts->filter->has_five_comments_or_more;
+```
+
+//
 
 ### Testing
 

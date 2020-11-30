@@ -5,20 +5,17 @@ namespace ProtoneMedia\LaravelEloquentScopeAsSelect\Tests;
 use Illuminate\Database\Eloquent\Model;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use PDO;
-use ProtoneMedia\LaravelEloquentScopeAsSelect\ServiceProvider;
+use ProtoneMedia\LaravelEloquentScopeAsSelect\ScopeAsSelect;
 
 class TestCase extends OrchestraTestCase
 {
-    protected function getPackageProviders($app)
-    {
-        return [ServiceProvider::class];
-    }
-
     public function setUp(): void
     {
         parent::setUp();
 
         Model::unguard();
+
+        ScopeAsSelect::addMacro();
 
         $this->app['config']->set('app.key', 'base64:yWa/ByhLC/GUvfToOuaPD7zDwB64qkc/QkaQOrT5IpE=');
 
