@@ -51,4 +51,35 @@ class ScopeAsSelectTest extends TestCase
         $this->assertFalse($posts->get(0)->has_six_or_more_comments);
         $this->assertTrue($posts->get(1)->has_six_or_more_comments);
     }
+
+    /** @test */
+    public function it_can_do_inline_contraints_as_well()
+    {
+        $postA = Post::create(['title' => 'foo']);
+        $postB = Post::create(['title' => 'foo']);
+        $postC = Post::create(['title' => 'bar']);
+        $postD = Post::create(['title' => 'bar']);
+
+        foreach (range(1, 5) as $i) {
+            $postA->comments()->create(['body' => 'ok']);
+            $postC->comments()->create(['body' => 'ok']);
+        }
+
+        foreach (range(1, 10) as $i) {
+            $postB->comments()->create(['body' => 'ok']);
+            $postD->comments()->create(['body' => 'ok']);
+        }
+
+        $posts = Post::query()
+            ->addScopeAsSelect('title_is_foo_and_has_six_comments_or_more', function ($query) {
+                $query->where('title', 'foo')->has('comments', '>=', 6);
+            })
+            ->orderBy('id')
+            ->get();
+
+        $this->assertFalse($posts->get(0)->title_is_foo_and_has_six_comments_or_more);
+        $this->assertTrue($posts->get(1)->title_is_foo_and_has_six_comments_or_more);
+        $this->assertFalse($posts->get(2)->title_is_foo_and_has_six_comments_or_more);
+        $this->assertFalse($posts->get(3)->title_is_foo_and_has_six_comments_or_more);
+    }
 }

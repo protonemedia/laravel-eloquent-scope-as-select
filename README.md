@@ -77,7 +77,29 @@ $allPosts = Post::query()
 $postsWithAtLeastFiveComments = $allPosts->filter->has_five_comments_or_more;
 ```
 
-//
+It works with inline query constraints as well:
+
+```php
+Post::query()
+    ->addScopeAsSelect('title_is_foo_and_has_five_comments_or_more', function ($query) {
+        $query->where('title', 'foo')->has('comments', '>=', 5);
+    })
+    ->orderBy('id')
+    ->get();
+```
+
+You can add multiple selects:
+
+```php
+$allPosts = Post::query()
+    ->addScopeAsSelect('title_is_foo', function ($query) {
+        $query->where('title', 'foo');
+    })
+    ->addScopeAsSelect('has_five_comments_or_more', function ($query) {
+        $query->hasFiveCommentsOrMore();
+    })
+    ->get();
+```
 
 ### Testing
 
