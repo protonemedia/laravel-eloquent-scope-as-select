@@ -2,10 +2,10 @@
 
 namespace ProtoneMedia\LaravelEloquentScopeAsSelect\Tests;
 
-class SearchTest extends TestCase
+class ScopeAsSelectTest extends TestCase
 {
     /** @test */
-    public function it_can_search_two_models_and_orders_by_updated_at_by_default()
+    public function it_can_add_a_scope_as_a_select()
     {
         $postA = Post::create(['title' => 'foo']);
         $postB = Post::create(['title' => 'bar']);
