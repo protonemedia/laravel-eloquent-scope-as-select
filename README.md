@@ -1,4 +1,4 @@
-# Laravel Eloquent Scope as Select
+# [WIP] Laravel Eloquent Scope as Select
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/protonemedia/laravel-eloquent-scope-as-select.svg?style=flat-square)](https://packagist.org/packages/protonemedia/laravel-eloquent-scope-as-select)
 ![run-tests](https://github.com/protonemedia/laravel-eloquent-scope-as-select/workflows/run-tests/badge.svg)
@@ -6,7 +6,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/protonemedia/laravel-eloquent-scope-as-select.svg?style=flat-square)](https://packagist.org/packages/protonemedia/laravel-eloquent-scope-as-select)
 [![Buy us a tree](https://img.shields.io/badge/Treeware-%F0%9F%8C%B3-lightgreen)](https://plant.treeware.earth/protonemedia/laravel-eloquent-scope-as-select)
 
-...
+[Related tweet](https://twitter.com/pascalbaljet/status/1333162093319757828)
 
 ## Requirements
 
