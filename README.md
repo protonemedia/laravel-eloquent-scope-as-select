@@ -74,7 +74,7 @@ $allPublishedPosts = Post::published()->get();
 But what if you want to fetch *all* posts and *then* check if the post is published? This scope is quite simple, so you can easily mimic the scope's outcome by checking the `published_at` attribute:
 
 ```php
-Posts::get()->each(function(Post $post) {
+Posts::get()->each(function (Post $post) {
     $isPublished = !is_null($post->published_at);
 });
 ```
@@ -87,6 +87,11 @@ class Post extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->whereNotNull('published_at');
     }
 
     public function scopePublishedInCurrentYear($query)
@@ -105,7 +110,7 @@ $recentPopularPosts = Post::query()->publishedInCurrentYear()->has('comments', '
 Great! Now we want to fetch all posts again, and then check if the post was published this year and has at least 10 comments.
 
 ```php
-Posts::get()->each(function(Post $post) {
+Posts::get()->each(function (Post $post) {
     $isRecentAndPopular = $post->comments()->count() >= 10 && optional($post->published_at)->isCurrentYear();
 });
 ```
@@ -131,7 +136,7 @@ $posts = Post::addScopeAsSelect('is_published', fn ($query) => $query->published
 Now every `Post` model will have an `is_published` boolean attribute.
 
 ```php
-$posts->each(function(Post $post) {
+$posts->each(function (Post $post) {
     $isPublished = $post->is_published;
 });
 ```
@@ -147,7 +152,7 @@ Post::query()
         $query->publishedInCurrentYear()->has('comments', '>=', 10);
     })
     ->get()
-    ->each(function(Post $post) {
+    ->each(function (Post $post) {
         $isPublished = $post->is_published;
 
         $isRecentAndPopular = $post->is_recent_and_popular;
