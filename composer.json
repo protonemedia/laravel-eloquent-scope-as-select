@@ -1,6 +1,6 @@
 {
     "name": "protonemedia/laravel-eloquent-scope-as-select",
-    "description": "Laravel package to search through multiple Eloquent models. Supports pagination, eager loading relations, single/multiple columns, sorting and scoped queries.",
+    "description": "Laravel package to add Eloquent scopes as constraints as subquery selects.",
     "keywords": [
         "protonemedia",
         "laravel-eloquent-scope-as-select"
@@ -20,7 +20,6 @@
         "illuminate/support": "^7.0|^8.0"
     },
     "require-dev": {
-        "mockery/mockery": "^1.3.3",
         "orchestra/testbench": "^5.0|^6.0",
         "phpunit/phpunit": "^9.0"
     },
