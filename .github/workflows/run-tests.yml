@@ -51,7 +51,7 @@ jobs:
                     coverage: none
 
             -   name: Install dependencies
-                run: composer update --with='laravel/framework:${{ matrix.laravel }}' --with='orchestra/testbench:${{ matrix.testbench }}' --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
+                run: composer update --with='laravel/framework:${{ matrix.laravel }}' --with='orchestra/testbench:${{ matrix.testbench }}' --${{ matrix.dependency-version }} --prefer-dist --no-interaction
 
             -   name: Execute tests
                 run: vendor/bin/phpunit
