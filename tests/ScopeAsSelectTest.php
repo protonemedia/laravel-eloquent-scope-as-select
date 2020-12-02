@@ -80,4 +80,37 @@ class ScopeAsSelectTest extends TestCase
         $this->assertFalse($posts->get(2)->title_is_foo_and_has_six_comments_or_more);
         $this->assertFalse($posts->get(3)->title_is_foo_and_has_six_comments_or_more);
     }
+
+    /** @test */
+    public function it_can_mix_scopes_outside_of_the_closure()
+    {
+        $postA = Post::create(['title' => 'foo']);
+        $postB = Post::create(['title' => 'foo']);
+        $postC = Post::create(['title' => 'bar']);
+        $postD = Post::create(['title' => 'bar']);
+
+        foreach (range(1, 5) as $i) {
+            $postA->comments()->create(['body' => 'ok']);
+            $postC->comments()->create(['body' => 'ok']);
+        }
+
+        foreach (range(1, 10) as $i) {
+            $postB->comments()->create(['body' => 'ok']);
+            $postD->comments()->create(['body' => 'ok']);
+        }
+
+        $posts = Post::query()
+            ->where('title', 'foo')
+            ->addScopeAsSelect('title_is_foo_and_has_six_comments_or_more', function ($query) {
+                $query->has('comments', '>=', 6);
+            })
+            ->orderBy('id')
+            ->get();
+
+        $this->assertCount(2, $posts);
+        $this->assertTrue($posts->contains($postA));
+        $this->assertTrue($posts->contains($postB));
+        $this->assertFalse($posts->get(0)->title_is_foo_and_has_six_comments_or_more);
+        $this->assertTrue($posts->get(1)->title_is_foo_and_has_six_comments_or_more);
+    }
 }
