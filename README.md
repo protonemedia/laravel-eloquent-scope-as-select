@@ -27,7 +27,8 @@ We proudly support the community by developing Laravel packages and giving them 
 
 ## Blogpost
 
-[Coming soon!](https://protone.media/en/blog)
+
+If you want to know more about the background of this package, please read [the blogpost](https://protone.media/blog/stop-duplicating-your-eloquent-query-scopes-and-constraints-re-use-them-as-select-statements-with-a-new-laravel-package).
 
 ## Installation
 
