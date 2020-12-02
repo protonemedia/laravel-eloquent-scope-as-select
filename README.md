@@ -8,6 +8,8 @@
 
 Stop duplicating your Eloquent query scopes and constraints in PHP. This package lets you re-use your query scopes and constraints by adding them as a subquery.
 
+### 📺 Want to see this package in action? Join the live stream on December 3 at 14:00 CET: [https://youtu.be/0vR8IQSFsfQ](https://youtu.be/0vR8IQSFsfQ)
+
 ## Requirements
 
 * PHP 7.4+
