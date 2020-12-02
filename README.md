@@ -13,8 +13,9 @@ Stop duplicating your Eloquent query scopes and constraints in PHP. This package
 ## Requirements
 
 * PHP 7.4+
-* MySQL 5.7+
 * Laravel 7.0 and higher
+
+This package has been tested with MySQL 5.7+ but others drivers should work as well.
 
 ## Features
 
