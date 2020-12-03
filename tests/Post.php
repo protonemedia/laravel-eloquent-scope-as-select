@@ -11,13 +11,23 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function scopeTitleIs($query, $title)
+    {
+        $query->where($query->qualifyColumn('title'), $title);
+    }
+
     public function scopeTitleIsFoo($query)
     {
-        $query->where($query->qualifyColumn('title'), 'foo');
+        $query->titleIs('foo');
+    }
+
+    public function scopeHasMoreCommentsThan($query, $value)
+    {
+        $query->has('comments', '>', $value);
     }
 
     public function scopeHasSixOrMoreComments($query)
     {
-        $query->has('comments', '>=', 6);
+        $query->hasMoreCommentsThan(5);
     }
 }

@@ -3,6 +3,7 @@
 namespace ProtoneMedia\LaravelEloquentScopeAsSelect;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class ScopeAsSelect
@@ -18,9 +19,34 @@ class ScopeAsSelect
         return $value;
     }
 
+    public static function makeCallable($value): callable
+    {
+        $scopes = Arr::wrap($value);
+
+        return function ($query) use ($scopes) {
+            foreach ($scopes as $key => $scope) {
+                $arguments = [];
+
+                if (is_string($key)) {
+                    $arguments = Arr::wrap($scope);
+
+                    $scope = $key;
+                }
+
+                $query->{$scope}(...$arguments);
+            }
+
+            return $query;
+        };
+    }
+
     public static function addMacro(string $name = 'addScopeAsSelect')
     {
-        Builder::macro($name, function (string $name, callable $callable): Builder {
+        Builder::macro($name, function (string $name, $withQuery): Builder {
+            $callable = is_callable($withQuery)
+                ? $withQuery
+                : ScopeAsSelect::makeCallable($withQuery);
+
             $query = ScopeAsSelect::builder($this);
 
             $originalTable = $query->getModel()->getTable();
