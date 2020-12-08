@@ -74,7 +74,7 @@ class ScopeAsSelect
             // Query the model and explicitly set the targetted table, as the model's table
             // is just the aliased table with the 'as' statement.
             $subSelect = $aliasedModel::query();
-            $subSelect->getQuery()->from("{$originalTable} as {$aliasedTable}");
+            $subSelect->getQuery()->from($originalTable, $aliasedTable);
 
             // Apply the where constraint based on the model's key name and apply the $callable.
             $subSelect
