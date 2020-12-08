@@ -30,7 +30,6 @@ We proudly support the community by developing Laravel packages and giving them 
 
 ## Blogpost
 
-
 If you want to know more about the background of this package, please read [the blogpost](https://protone.media/blog/stop-duplicating-your-eloquent-query-scopes-and-constraints-re-use-them-as-select-statements-with-a-new-laravel-package).
 
 ## Installation
@@ -42,7 +41,6 @@ composer require protonemedia/laravel-eloquent-scope-as-select
 ```
 
 Add the `macro` to the query builder, for example, in your `AppServiceProvider`:
-
 
 ```php
 use ProtoneMedia\LaravelEloquentScopeAsSelect\ScopeAsSelect;
@@ -57,6 +55,37 @@ By default, the name of the macro is `addScopeAsSelect`, but you can customize i
 
 ```php
 ScopeAsSelect::addMacro('withScopeAsSubQuery');
+```
+
+## Short API description
+
+For a more practical explanation, check out the [#usage](usage) section below.
+
+Using a Closure:
+```php
+$posts = Post::addScopeAsSelect('is_published', function ($query) {
+    $query->published();
+})->get();
+```
+
+Using a string:
+```php
+$posts = Post::addScopeAsSelect('is_published', 'published')->get();
+```
+
+Using an array to use multiple scopes:
+```php
+$posts = Post::addScopeAsSelect('is_popular_and_published', ['popular', 'published'])->get();
+```
+
+Using an associative array to use dynamic scopes:
+```php
+$posts = Post::addScopeAsSelect('is_announcement', ['ofType' => 'announcement'])->get();
+```
+
+There's an optional third argument to flip the result:
+```php
+$posts = Post::addScopeAsSelect('is_not_announcement', ['ofType' => 'announcement'], false)->get();
 ```
 
 ## Usage
@@ -169,6 +198,24 @@ Post::query()
 
         $isRecentAndPopular = $post->is_recent_and_popular;
     });
+```
+
+### Shortcuts
+
+Instead of using a Closure, there are some shortcuts you could use:
+
+```php
+Post::addScopeAsSelect('is_published', function ($query) {
+    $query->published();
+});
+
+// is equal to:
+
+Post::addScopeAsSelect('is_published', 'published');
+
+// or:
+
+Post::addScopeAsSelect('is_published', ['published']);
 ```
 
 ### Testing
