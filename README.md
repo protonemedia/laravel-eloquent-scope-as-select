@@ -19,10 +19,12 @@ This package has been tested with MySQL 5.7+ but others drivers should work as w
 
 ## Features
 
-* Add a subquery based on a [query scope](https://laravel.com/docs/8.x/eloquent#query-scopes)
-* Add a subquery using a Closure
-* Support more than one subquery
-* Zero third-party dependencies
+* Add a subquery based on a [query scope](https://laravel.com/docs/8.x/eloquent#query-scopes).
+* Add a subquery using a Closure.
+* Shortcuts for calling scopes by using a string or array.
+* Support for more than one subquery.
+* Support for flipping the result.
+* Zero third-party dependencies.
 
 ## Support
 
@@ -65,27 +67,27 @@ $posts = Post::addScopeAsSelect('is_published', function ($query) {
 })->get();
 ```
 
-Using a string, where the second argument is the name of the scope:
+The example above can be shortened by using a string, where the second argument is the name of the scope:
 ```php
 $posts = Post::addScopeAsSelect('is_published', 'published')->get();
 ```
 
-Using an array to call multiple scopes:
+You can use an array to call multiple scopes:
 ```php
 $posts = Post::addScopeAsSelect('is_popular_and_published', ['popular', 'published'])->get();
 ```
 
-Using an associative array to call dynamic scopes:
+Use an associative array to call dynamic scopes:
 ```php
 $posts = Post::addScopeAsSelect('is_announcement', ['ofType' => 'announcement'])->get();
 ```
 
-Using an associative array to call dynamic scopes with multiple arguments:
+If your dynamic scopes require multiple arguments, you can use an associative array:
 ```php
 $posts = Post::addScopeAsSelect('is_announcement', ['publishedBetween' => [2010, 2020]])->get();
 ```
 
-Using an associative array to mix dynamic and non-dynamic scopes:
+You can also mix dynamic and non-dynmaic scopes:
 ```php
 $posts = Post::addScopeAsSelect('is_published_announcement', [
     'published',
@@ -93,8 +95,7 @@ $posts = Post::addScopeAsSelect('is_published_announcement', [
 ])->get();
 ```
 
-The method supports an optional third argument that flips the result.
-
+The method has an optional third argument that flips the result.
 ```php
 $posts = Post::addScopeAsSelect('is_not_announcement', ['ofType' => 'announcement'], false)->get();
 ```
