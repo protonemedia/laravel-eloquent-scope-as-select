@@ -16,6 +16,23 @@ class WhereNot
     protected static $tableSubCount = [];
 
     /**
+     * Makes an alias for the given table.
+     *
+     * @param string $table
+     * @return string
+     */
+    public static function getTableAlias($table): string
+    {
+        if (!array_key_exists($table, static::$tableSubCount)) {
+            static::$tableSubCount[$table] = 0;
+        }
+
+        $count = static::$tableSubCount[$table]++;
+
+        return "where_not_{$count}_{$table}";
+    }
+
+    /**
      * Helper method for code completion.
      *
      * @param mixed $value
@@ -57,23 +74,6 @@ class WhereNot
     }
 
     /**
-     * Makes an alias for the given table.
-     *
-     * @param string $table
-     * @return string
-     */
-    public static function getTableAlias($table): string
-    {
-        if (!array_key_exists($table, static::$tableSubCount)) {
-            static::$tableSubCount[$table] = 0;
-        }
-
-        $count = static::$tableSubCount[$table]++;
-
-        return "where_scope_not_{$count}_{$table}";
-    }
-
-    /**
      * Adds a macro to the query builder.
      *
      * @param string $name
@@ -90,17 +90,19 @@ class WhereNot
             $builder = WhereNot::builder($this);
 
             return $builder->whereNotExists(function ($query) use ($callable, $builder) {
-                $eloquentBuilder = new Builder($query);
-                $eloquentBuilder->setModel($builder->getModel());
+                // Create a new Eloquent Query Builder with the given Query Builder and
+                // set the model from the original builder.
+                $query = new Builder($query);
+                $query->setModel($builder->getModel());
 
-                $originalTable = $eloquentBuilder->getModel()->getTable();
+                $originalTable = $query->getModel()->getTable();
 
                 // Instantiate a new model that uses the aliased table.
                 $aliasedTable = WhereNot::getTableAlias($originalTable);
-                $aliasedModel = $eloquentBuilder->newModelInstance()->setTable($aliasedTable);
+                $aliasedModel = $query->newModelInstance()->setTable($aliasedTable);
 
                 // Apply the where constraint based on the model's key name and apply the $callable.
-                $eloquentBuilder
+                $query
                     ->select(DB::raw(1))
                     ->from($originalTable, $aliasedTable)
                     ->whereColumn($aliasedModel->getQualifiedKeyName(), 'posts.id')
