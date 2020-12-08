@@ -58,14 +58,14 @@ public function boot()
 
 For a more practical explanation, check out the [usage](#usage) section below.
 
-Using a Closure:
+Add a select using a Closure:
 ```php
 $posts = Post::addScopeAsSelect('is_published', function ($query) {
     $query->published();
 })->get();
 ```
 
-Using a string:
+Using a string, where the second argument is the name of the scope:
 ```php
 $posts = Post::addScopeAsSelect('is_published', 'published')->get();
 ```
@@ -80,7 +80,12 @@ Using an associative array to call dynamic scopes:
 $posts = Post::addScopeAsSelect('is_announcement', ['ofType' => 'announcement'])->get();
 ```
 
-Using an associative array to mix (dynamic) scopes:
+Using an associative array to call dynamic scopes with multiple arguments:
+```php
+$posts = Post::addScopeAsSelect('is_announcement', ['publishedBetween' => [2010, 2020]])->get();
+```
+
+Using an associative array to mix dynamic and non-dynamic scopes:
 ```php
 $posts = Post::addScopeAsSelect('is_published_announcement', [
     'published',
@@ -88,7 +93,8 @@ $posts = Post::addScopeAsSelect('is_published_announcement', [
 ])->get();
 ```
 
-There's an optional third argument to flip the result:
+The method supports an optional third argument that flips the result.
+
 ```php
 $posts = Post::addScopeAsSelect('is_not_announcement', ['ofType' => 'announcement'], false)->get();
 ```
@@ -207,7 +213,9 @@ Post::query()
 
 ### Shortcuts
 
-Instead of using a Closure, there are some shortcuts you could use:
+Instead of using a Closure, there are some shortcuts you could use (see also: [Short API description](#short-api-description)):
+
+Using a string instead of a Closure:
 
 ```php
 Post::addScopeAsSelect('is_published', function ($query) {
@@ -219,6 +227,8 @@ Post::addScopeAsSelect('is_published', function ($query) {
 Post::addScopeAsSelect('is_published', 'published');
 ```
 
+Using an array instead of Closure, to support multiple scopes and dynamic scopes:
+
 ```php
 Post::addScopeAsSelect('is_announcement', function ($query) {
     $query->ofType('announcement');
@@ -229,6 +239,15 @@ Post::addScopeAsSelect('is_announcement', function ($query) {
 Post::addScopeAsSelect('is_announcement', ['ofType' => 'announcement']);
 ```
 
+You can also flip the result with the optional third parameters (it defaults to `true`):
+
+```php
+$postA = Post::addScopeAsSelect('is_announcement', ['ofType' => 'announcement'])->first();
+$postB = Post::addScopeAsSelect('is_not_announcement', ['ofType' => 'announcement'], false)->first();
+
+$this->assertTrue($postA->is_announcement)
+$this->assertFalse($postB->is_not_announcement);
+```
 
 ### Testing
 
