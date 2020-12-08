@@ -49,16 +49,16 @@ public function boot()
 {
     ScopeAsSelect::addMacro();
 
-    // custom method:
+    // or use a custom method name:
     ScopeAsSelect::addMacro('withScopeAsSubQuery');
 }
 ```
 
 ## Short API description
 
-For a more practical explanation, check out the [usage](#usage) section below.
+*For a more practical explanation, check out the [usage](#usage) section below.*
 
-Add a select using a Closure:
+Add a select using a Closure. Each `Post` model, published or not, will have an `is_published` attribute.
 ```php
 $posts = Post::addScopeAsSelect('is_published', function ($query) {
     $query->published();
@@ -239,7 +239,7 @@ Post::addScopeAsSelect('is_announcement', function ($query) {
 Post::addScopeAsSelect('is_announcement', ['ofType' => 'announcement']);
 ```
 
-You can also flip the result with the optional third parameters (it defaults to `true`):
+You can also flip the result with the optional third parameter (it defaults to `true`):
 
 ```php
 $postA = Post::addScopeAsSelect('is_announcement', ['ofType' => 'announcement'])->first();
