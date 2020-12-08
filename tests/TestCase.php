@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use PDO;
 use ProtoneMedia\LaravelEloquentScopeAsSelect\ScopeAsSelect;
+use ProtoneMedia\LaravelEloquentScopeAsSelect\WhereNot;
 
 class TestCase extends OrchestraTestCase
 {
@@ -16,6 +17,7 @@ class TestCase extends OrchestraTestCase
         Model::unguard();
 
         ScopeAsSelect::addMacro();
+        WhereNot::addMacro();
 
         $this->app['config']->set('app.key', 'base64:yWa/ByhLC/GUvfToOuaPD7zDwB64qkc/QkaQOrT5IpE=');
 
