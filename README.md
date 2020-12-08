@@ -30,7 +30,7 @@ We proudly support the community by developing Laravel packages and giving them 
 
 ## Blogpost
 
-If you want to know more about the background of this package, please read [the blogpost](https://protone.media/blog/stop-duplicating-your-eloquent-query-scopes-and-constraints-re-use-them-as-select-statements-with-a-new-laravel-package).
+If you want to know more about the background of this package, please read the blogpost: [Stop duplicating your Eloquent query scopes and constraints. Re-use them as select statements with a new Laravel package](https://protone.media/blog/stop-duplicating-your-eloquent-query-scopes-and-constraints-re-use-them-as-select-statements-with-a-new-laravel-package).
 
 ## Installation
 
@@ -222,12 +222,16 @@ Post::addScopeAsSelect('is_published', function ($query) {
 Post::addScopeAsSelect('is_published', 'published');
 ```
 
-Post::addScopeAsSelect('is_published', function ($query) {
-    $query->published();
-})
+```php
+Post::addScopeAsSelect('is_announcement', function ($query) {
+    $query->ofType('announcement');
+});
 
-Post::addScopeAsSelect('is_published', ['published']);
+// is the same as:
+
+Post::addScopeAsSelect('is_announcement', ['ofType' => 'announcement']);
 ```
+
 
 ### Testing
 

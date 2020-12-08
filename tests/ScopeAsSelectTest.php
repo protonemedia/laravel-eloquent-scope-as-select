@@ -105,6 +105,25 @@ class ScopeAsSelectTest extends TestCase
     }
 
     /** @test */
+    public function it_can_add_multiple_dynamic_scopes_by_using_an_array_of_scope_arguments()
+    {
+        [$postA, $postB, $postC, $postD] = $this->prepareFourPosts();
+
+        $posts = Post::query()
+            ->addScopeAsSelect('title_is_foo_and_has_more_than_five_comments', [
+                'titleIsFoo',
+                'hasMoreCommentsThan' => [5],
+            ])
+            ->orderBy('id')
+            ->get();
+
+        $this->assertFalse($posts->get(0)->title_is_foo_and_has_more_than_five_comments);
+        $this->assertTrue($posts->get(1)->title_is_foo_and_has_more_than_five_comments);
+        $this->assertFalse($posts->get(2)->title_is_foo_and_has_more_than_five_comments);
+        $this->assertFalse($posts->get(3)->title_is_foo_and_has_more_than_five_comments);
+    }
+
+    /** @test */
     public function it_can_add_multiple_and_has_relation_scopes()
     {
         $postA = Post::create(['title' => 'foo']);
