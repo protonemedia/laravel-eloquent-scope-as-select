@@ -40,7 +40,7 @@ class ScopeAsSelectTest extends TestCase
     }
 
     /** @test */
-    public function it_can_add_a_scope_as_a_select_and_cast_inversed()
+    public function it_can_add_a_scope_as_a_select_and_cast_flipped()
     {
         $postA = Post::create(['title' => 'foo']);
         $postB = Post::create(['title' => 'bar']);

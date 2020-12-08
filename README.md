@@ -62,34 +62,34 @@ public function boot()
 
 Add a select using a Closure. Each `Post` model, published or not, will have an `is_published` attribute.
 ```php
-$posts = Post::addScopeAsSelect('is_published', function ($query) {
+Post::addScopeAsSelect('is_published', function ($query) {
     $query->published();
 })->get();
 ```
 
 The example above can be shortened by using a string, where the second argument is the name of the scope:
 ```php
-$posts = Post::addScopeAsSelect('is_published', 'published')->get();
+Post::addScopeAsSelect('is_published', 'published')->get();
 ```
 
 You can use an array to call multiple scopes:
 ```php
-$posts = Post::addScopeAsSelect('is_popular_and_published', ['popular', 'published'])->get();
+Post::addScopeAsSelect('is_popular_and_published', ['popular', 'published'])->get();
 ```
 
 Use an associative array to call dynamic scopes:
 ```php
-$posts = Post::addScopeAsSelect('is_announcement', ['ofType' => 'announcement'])->get();
+Post::addScopeAsSelect('is_announcement', ['ofType' => 'announcement'])->get();
 ```
 
 If your dynamic scopes require multiple arguments, you can use an associative array:
 ```php
-$posts = Post::addScopeAsSelect('is_announcement', ['publishedBetween' => [2010, 2020]])->get();
+Post::addScopeAsSelect('is_announcement', ['publishedBetween' => [2010, 2020]])->get();
 ```
 
 You can also mix dynamic and non-dynmaic scopes:
 ```php
-$posts = Post::addScopeAsSelect('is_published_announcement', [
+Post::addScopeAsSelect('is_published_announcement', [
     'published',
     'ofType' => 'announcement'
 ])->get();
@@ -97,8 +97,9 @@ $posts = Post::addScopeAsSelect('is_published_announcement', [
 
 The method has an optional third argument that flips the result.
 ```php
-$posts = Post::addScopeAsSelect('is_not_announcement', ['ofType' => 'announcement'], false)->get();
+Post::addScopeAsSelect('is_not_announcement', ['ofType' => 'announcement'], false)->get();
 ```
+
 
 ## Usage
 
