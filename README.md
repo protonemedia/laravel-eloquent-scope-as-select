@@ -40,7 +40,7 @@ You can install the package via composer:
 composer require protonemedia/laravel-eloquent-scope-as-select
 ```
 
-Add the `macro` to the query builder, for example, in your `AppServiceProvider`:
+Add the `macro` to the query builder, for example, in your `AppServiceProvider`. By default, the name of the macro is `addScopeAsSelect`, but you can customize it with the first parameter of the `addMacro` method.
 
 ```php
 use ProtoneMedia\LaravelEloquentScopeAsSelect\ScopeAsSelect;
@@ -48,13 +48,10 @@ use ProtoneMedia\LaravelEloquentScopeAsSelect\ScopeAsSelect;
 public function boot()
 {
     ScopeAsSelect::addMacro();
+
+    // custom method:
+    ScopeAsSelect::addMacro('withScopeAsSubQuery');
 }
-```
-
-By default, the name of the macro is `addScopeAsSelect`, but you can customize it with the first parameter of the `addMacro` method:
-
-```php
-ScopeAsSelect::addMacro('withScopeAsSubQuery');
 ```
 
 ## Short API description
