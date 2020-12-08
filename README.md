@@ -59,7 +59,7 @@ ScopeAsSelect::addMacro('withScopeAsSubQuery');
 
 ## Short API description
 
-For a more practical explanation, check out the [#usage](usage) section below.
+For a more practical explanation, check out the [usage](#usage) section below.
 
 Using a Closure:
 ```php
@@ -73,14 +73,22 @@ Using a string:
 $posts = Post::addScopeAsSelect('is_published', 'published')->get();
 ```
 
-Using an array to use multiple scopes:
+Using an array to call multiple scopes:
 ```php
 $posts = Post::addScopeAsSelect('is_popular_and_published', ['popular', 'published'])->get();
 ```
 
-Using an associative array to use dynamic scopes:
+Using an associative array to call dynamic scopes:
 ```php
 $posts = Post::addScopeAsSelect('is_announcement', ['ofType' => 'announcement'])->get();
+```
+
+Using an associative array to mix (dynamic) scopes:
+```php
+$posts = Post::addScopeAsSelect('is_published_announcement', [
+    'published',
+    'ofType' => 'announcement'
+])->get();
 ```
 
 There's an optional third argument to flip the result:
@@ -209,11 +217,14 @@ Post::addScopeAsSelect('is_published', function ($query) {
     $query->published();
 });
 
-// is equal to:
+// is the same as:
 
 Post::addScopeAsSelect('is_published', 'published');
+```
 
-// or:
+Post::addScopeAsSelect('is_published', function ($query) {
+    $query->published();
+})
 
 Post::addScopeAsSelect('is_published', ['published']);
 ```
