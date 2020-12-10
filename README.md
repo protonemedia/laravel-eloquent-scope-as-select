@@ -25,7 +25,8 @@ This package has been tested with MySQL 5.7+ but others drivers should work as w
 * Support for more than one subquery.
 * Support for flipping the result.
 * Zero third-party dependencies.
-* [WIP] Support for flipping/inverting scopes ([PR #4](https://github.com/protonemedia/laravel-eloquent-scope-as-select/pull/4))
+
+Related package: [Laravel Eloquent Where Not](https://github.com/protonemedia/laravel-eloquent-where-not)
 
 ## Support
 
