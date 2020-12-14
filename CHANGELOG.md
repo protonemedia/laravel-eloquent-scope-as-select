@@ -2,27 +2,14 @@
 
 All notable changes to `laravel-eloquent-scope-as-select` will be documented in this file
 
-## 1.4.0 - 2020-10-28
+## 1.1.1 - 2020-12-14
 
-- Allow empty search terms
-- Added `new()` method method
+- Bugfix for counting relations from the same model
 
-## 1.3.1 - 2020-10-28
+## 1.1.0 - 2020-12-08
 
-- Docs
+- Call scopes with a string or array with additional constraints
 
-## 1.3.0 - 2020-09-24
-
-- Support for Laravel 8.0
-
-## 1.2.0 - 2020-08-28
-
-- standalone search terms parser
-
-## 1.1.0 - 2020-08-10
-
-- option to disable the parsing of the search term
-
-## 1.0.0 - 2020-07-08
+## 1.0.0 - 2020-12-03
 
 - initial release

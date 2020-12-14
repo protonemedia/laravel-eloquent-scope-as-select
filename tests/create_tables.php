@@ -25,6 +25,7 @@ class CreateTables extends Migration
             $table->unsignedInteger('post_id');
             $table->string('body');
             $table->date('published_at')->nullable();
+            $table->unsignedInteger('parent_comment_id')->nullable();
             $table->timestamps();
         });
 

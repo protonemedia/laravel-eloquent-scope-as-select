@@ -191,4 +191,26 @@ class ScopeAsSelectTest extends TestCase
         $this->assertFalse($posts->get(0)->title_is_foo_and_has_six_comments_or_more);
         $this->assertTrue($posts->get(1)->title_is_foo_and_has_six_comments_or_more);
     }
+
+    /** @test */
+    public function it_can_check_for_children_of_the_same_model()
+    {
+        $post = Post::create(['title' => 'bar']);
+
+        $commentParent = $post->comments()->create(['body' => 'ok']);
+        $commentChild  = $post->comments()->create(['body' => 'ok', 'parent_comment_id' => $commentParent->getKey()]);
+
+        $comments = Comment::query()
+            ->addScopeAsSelect('has_children', function ($query) {
+                $query->has('comments');
+            })
+            ->orderBy('id')
+            ->get();
+
+        $this->assertCount(2, $comments);
+        $this->assertTrue($comments->contains($commentParent));
+        $this->assertTrue($comments->contains($commentChild));
+        $this->assertTrue($comments->get(0)->has_children);
+        $this->assertFalse($comments->get(1)->has_children);
+    }
 }
