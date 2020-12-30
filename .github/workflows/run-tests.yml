@@ -26,7 +26,7 @@ jobs:
                 env:
                     MYSQL_ALLOW_EMPTY_PASSWORD: no
                     MYSQL_USER: protone_media_db_test
-                    MYSQL_DATABASE: protone_media_db_test
+                    MYSQL_DATABASE: protone_media_db_test_mysql
                     MYSQL_PASSWORD: secret
                     MYSQL_ROOT_PASSWORD: secret
                 ports:
@@ -37,7 +37,7 @@ jobs:
                 env:
                     POSTGRES_USER: protone_media_db_test
                     POSTGRES_PASSWORD: secret
-                    POSTGRES_DB: protone_media_db_test
+                    POSTGRES_DB: protone_media_db_test_postgres
                 ports:
                     - 5432:5432
                 options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
@@ -68,7 +68,7 @@ jobs:
                 run: vendor/bin/phpunit
                 if: ${{ matrix.db == 'mysql' }}
                 env:
-                    DB_DATABASE: protone_media_db_test
+                    DB_DATABASE: protone_media_db_test_mysql
                     DB_USERNAME: protone_media_db_test
                     DB_PASSWORD: secret
                     DB_PORT: ${{ job.services.mysql.ports[3306] }}
@@ -78,7 +78,7 @@ jobs:
                 if: ${{ matrix.db == 'postgres' }}
                 env:
                     DB_CONNECTION: pgsql
-                    DB_DATABASE: protone_media_db_test
+                    DB_DATABASE: protone_media_db_test_postgres
                     DB_USERNAME: protone_media_db_test
                     DB_PASSWORD: secret
                     DB_PORT: ${{ job.services.postgres.ports[5432] }}
