@@ -28,7 +28,7 @@ This package is tested with GitHub Actions using MySQL 8.0, PostgreSQL 10.8 and 
 
 Related package: [Laravel Eloquent Where Not](https://github.com/protonemedia/laravel-eloquent-where-not)
 
-## Support this package!
+## Sponsor this package!
 
 ❤️ We proudly support the community by developing Laravel packages and giving them away for free. If this package saves you time or if you're relying on it professionally, please consider [sponsoring the maintenance and development](https://github.com/sponsors/pascalbaljet). Keeping track of issues and pull requests takes time, but we're happy to help!
 
