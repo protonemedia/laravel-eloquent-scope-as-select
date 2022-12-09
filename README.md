@@ -12,10 +12,10 @@ Stop duplicating your Eloquent query scopes and constraints in PHP. This package
 
 ## Requirements
 
-* PHP 7.4+
-* Laravel 8.0 or 9.0
+* PHP 8.0+
+* Laravel 9.0
 
-This package is tested with GitHub Actions using MySQL 5.7, PostgreSQL 10.8 and SQLite.
+This package is tested with GitHub Actions using MySQL 8.0, PostgreSQL 10.8 and SQLite.
 
 ## Features
 
