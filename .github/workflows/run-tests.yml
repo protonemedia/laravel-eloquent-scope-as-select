@@ -1,89 +1,97 @@
 name: run-tests
 
-on: [push, pull_request]
+on:
+  - push
+  - pull_request
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        strategy:
-            fail-fast: true
-            matrix:
-                php: [8.3, 8.2, 8.1]
-                laravel: [10.*]
-                db: [mysql, postgres, sqlite]
-                dependency-version: [prefer-lowest, prefer-stable]
-                include:
-                    - laravel: 10.*
-                      testbench: 8.*
+  test:
+    runs-on: ubuntu-latest
 
-        name: P${{ matrix.php }} - L${{ matrix.laravel }} - DB ${{ matrix.db }} - ${{ matrix.dependency-version }}
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [8.3, 8.2, 8.1]
+        laravel: ['10.*', '11.*']
+        db: [mysql, postgres, sqlite]
+        dependency-version: [prefer-lowest, prefer-stable]
+        include:
+          - laravel: 10.*
+            testbench: 8.*
+          - laravel: 11.*
+            testbench: 9.*
+        exclude:
+          - laravel: 11.*
+            php: 8.1
 
-        services:
-            mysql:
-                image: mysql:8.0
-                env:
-                    MYSQL_ALLOW_EMPTY_PASSWORD: no
-                    MYSQL_USER: protone_media_db_test
-                    MYSQL_DATABASE: protone_media_db_test_mysql
-                    MYSQL_PASSWORD: secret
-                    MYSQL_ROOT_PASSWORD: secret
-                ports:
-                    - 3306
-                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-            postgres:
-                image: postgres:10.8
-                env:
-                    POSTGRES_USER: protone_media_db_test
-                    POSTGRES_PASSWORD: secret
-                    POSTGRES_DB: protone_media_db_test_postgres
-                ports:
-                    - 5432:5432
-                options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    name: P${{ matrix.php }} - L${{ matrix.laravel }} - DB ${{ matrix.db }} - ${{ matrix.dependency-version }}
 
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: no
+          MYSQL_USER: protone_media_db_test
+          MYSQL_DATABASE: protone_media_db_test_mysql
+          MYSQL_PASSWORD: secret
+          MYSQL_ROOT_PASSWORD: secret
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      postgres:
+        image: postgres:10.8
+        env:
+          POSTGRES_USER: protone_media_db_test
+          POSTGRES_PASSWORD: secret
+          POSTGRES_DB: protone_media_db_test_postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
-            - name: Cache dependencies
-              uses: actions/cache@v2
-              with:
-                  path: ~/.composer/cache/files
-                  key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-            - name: Setup PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                  php-version: ${{ matrix.php }}
-                  extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, mysql, mysqli, pdo_mysql
-                  coverage: none
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.composer/cache/files
+          key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
-            - name: Install dependencies
-              run: |
-                  composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-                  composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, mysql, mysqli, pdo_mysql
+          coverage: none
 
-            - name: Execute tests (MySQL)
-              run: vendor/bin/phpunit
-              if: ${{ matrix.db == 'mysql' }}
-              env:
-                  DB_DATABASE: protone_media_db_test_mysql
-                  DB_USERNAME: protone_media_db_test
-                  DB_PASSWORD: secret
-                  DB_PORT: ${{ job.services.mysql.ports[3306] }}
+      - name: Install dependencies
+        run: |
+          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+          composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
 
-            - name: Execute tests (PostgreSQL)
-              run: vendor/bin/phpunit
-              if: ${{ matrix.db == 'postgres' }}
-              env:
-                  DB_CONNECTION: pgsql
-                  DB_DATABASE: protone_media_db_test_postgres
-                  DB_USERNAME: protone_media_db_test
-                  DB_PASSWORD: secret
-                  DB_PORT: ${{ job.services.postgres.ports[5432] }}
+      - name: Execute tests (MySQL)
+        run: vendor/bin/phpunit
+        if: "${{ matrix.db == 'mysql' }}"
+        env:
+          DB_DATABASE: protone_media_db_test_mysql
+          DB_USERNAME: protone_media_db_test
+          DB_PASSWORD: secret
+          DB_PORT: ${{ job.services.mysql.ports[3306] }}
 
-            - name: Execute tests (SQLite)
-              run: vendor/bin/phpunit
-              if: ${{ matrix.db == 'sqlite' }}
-              env:
-                  DB_CONNECTION: sqlite
-                  DB_DATABASE: ":memory:"
+      - name: Execute tests (PostgreSQL)
+        run: vendor/bin/phpunit
+        if: "${{ matrix.db == 'postgres' }}"
+        env:
+          DB_CONNECTION: pgsql
+          DB_DATABASE: protone_media_db_test_postgres
+          DB_USERNAME: protone_media_db_test
+          DB_PASSWORD: secret
+          DB_PORT: ${{ job.services.postgres.ports[5432] }}
+
+      - name: Execute tests (SQLite)
+        run: vendor/bin/phpunit
+        if: "${{ matrix.db == 'sqlite' }}"
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: :memory:
