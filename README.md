@@ -28,9 +28,11 @@ This package is tested with GitHub Actions using MySQL 8.0, PostgreSQL 10.8 and 
 
 Related package: [Laravel Eloquent Where Not](https://github.com/protonemedia/laravel-eloquent-where-not)
 
-## Sponsor this package!
+## Sponsor Us
 
-❤️ We proudly support the community by developing Laravel packages and giving them away for free. If this package saves you time or if you're relying on it professionally, please consider [sponsoring the maintenance and development](https://github.com/sponsors/pascalbaljet). Keeping track of issues and pull requests takes time, but we're happy to help!
+[<img src="https://inertiaui.com/visit-card.jpg" />](https://inertiaui.com/inertia-table?utm_source=github&utm_campaign=laravel-eloquent-scope-as-select)
+
+❤️ We proudly support the community by developing Laravel packages and giving them away for free. If this package saves you time or if you're relying on it professionally, please consider [sponsoring the maintenance and development](https://github.com/sponsors/pascalbaljet) and check out our latest premium package: [Inertia Table](https://inertiaui.com/inertia-table?utm_source=github&utm_campaign=laravel-eloquent-scope-as-select). Keeping track of issues and pull requests takes time, but we're happy to help!
 
 ## Blogpost
 
@@ -269,6 +271,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Other Laravel packages
 
+* [`Inertia Table`](https://inertiaui.com/inertia-table?utm_source=github&utm_campaign=laravel-eloquent-scope-as-select): The Ultimate Table for Inertia.js with built-in Query Builder.
 * [`Laravel Blade On Demand`](https://github.com/protonemedia/laravel-blade-on-demand): Laravel package to compile Blade templates in memory.
 * [`Laravel Cross Eloquent Search`](https://github.com/protonemedia/laravel-cross-eloquent-search): Laravel package to search through multiple Eloquent models.
 * [`Laravel FFMpeg`](https://github.com/protonemedia/laravel-ffmpeg): This package provides an integration with FFmpeg for Laravel. The storage of the files is handled by Laravel's Filesystem.
