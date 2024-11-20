@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [8.3, 8.2, 8.1]
+        php: [8.4, 8.3, 8.2]
         laravel: ["10.*", "11.*"]
         db: [mysql, postgres, sqlite]
         dependency-version: [prefer-lowest, prefer-stable]
@@ -20,9 +20,6 @@ jobs:
             testbench: 8.*
           - laravel: 11.*
             testbench: 9.*
-        exclude:
-          - laravel: 11.*
-            php: 8.1
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - DB ${{ matrix.db }} - ${{ matrix.dependency-version }}
 
