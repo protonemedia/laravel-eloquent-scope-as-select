@@ -13,13 +13,13 @@ Stop duplicating your Eloquent query scopes and constraints in PHP. This package
 ## Requirements
 
 * PHP 8.2+
-* Laravel 10.0
+* Laravel 11.0
 
 This package is tested with GitHub Actions using MySQL 8.0, PostgreSQL 10.8 and SQLite.
 
 ## Features
 
-* Add a subquery based on a [query scope](https://laravel.com/docs/8.x/eloquent#query-scopes).
+* Add a subquery based on a [query scope](https://laravel.com/docs/11.x/eloquent#query-scopes).
 * Add a subquery using a Closure.
 * Shortcuts for calling scopes by using a string or array.
 * Support for more than one subquery.
