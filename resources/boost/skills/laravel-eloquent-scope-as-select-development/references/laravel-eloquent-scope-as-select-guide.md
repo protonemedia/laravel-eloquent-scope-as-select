@@ -1,19 +1,15 @@
-# laravel-eloquent-scope-as-select development guide
+# Laravel Eloquent Scope as Select Reference
 
-For full documentation, see the README: https://github.com/protonemedia/laravel-eloquent-scope-as-select#readme
+Complete reference for `protonemedia/laravel-eloquent-scope-as-select`. Full documentation: https://github.com/protonemedia/laravel-eloquent-scope-as-select#readme
 
-## At a glance
-Allows re-using Eloquent query scopes/constraints by adding them as a **subquery/select**.
+## Start Here
+- README / docs: https://github.com/protonemedia/laravel-eloquent-scope-as-select#readme
 
-## Local setup
-- Install dependencies: `composer install`
-- Keep the dev loop package-focused (avoid adding app-only scaffolding).
+## Notes for AI Assistants
+- Treat the README as the source of truth for the supported public API.
+- Keep changes backward-compatible unless the change is explicitly a breaking change.
 
 ## Testing
-- Run: `composer test` (preferred) or the repository’s configured test runner.
-- Add regression tests for bug fixes.
+- Run the repository test command (see README / composer scripts).
 
-## Notes & conventions
-- Subquery correctness is essential (bindings, aliases, SQL portability).
-- Add tests for complex scopes (whereHas, joins, bindings).
-- Prefer database-agnostic SQL when possible.
+For detailed usage examples and the full API surface, refer to the README.

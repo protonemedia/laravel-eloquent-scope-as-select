@@ -1,14 +1,8 @@
-{{--
-  Laravel Boost guidelines (repository core)
+{{-- Laravel Eloquent Scope as Select Guidelines for AI Code Assistants --}}
+{{-- Source: https://github.com/protonemedia/laravel-eloquent-scope-as-select --}}
+{{-- License: MIT | (c) ProtoneMedia --}}
 
-  This file intentionally stays small: it links this repository to its package-specific Boost skill.
---}}
+## Laravel Eloquent Scope as Select
 
-<section>
-    <h2>Repository development skill</h2>
-
-    <p>
-        When working on this repository, activate the <code>laravel-eloquent-scope-as-select-development</code> skill.
-        It contains package-specific conventions, testing notes, and common pitfalls.
-    </p>
-</section>
+- Expose Eloquent scopes as selectable query constraints.
+- Always activate the `laravel-eloquent-scope-as-select-development` skill when making package-specific changes.
