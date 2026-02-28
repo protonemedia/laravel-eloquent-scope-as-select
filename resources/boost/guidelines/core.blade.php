@@ -4,7 +4,5 @@
 
 ## Laravel Eloquent Scope As Select
 
-- This project uses **Laravel Eloquent Scope As Select** (ProtoneMedia) in a Laravel application.
-- Activate the **`laravel-eloquent-scope-as-select-development`** skill when you are **integrating, configuring, or using** this package in app code (controllers, jobs, tests, config, routes, Blade, etc.).
-- Use the reference doc for the package’s public API and common recipes:
-  - `resources/boost/skills/laravel-eloquent-scope-as-select-development/references/laravel-eloquent-scope-as-select-guide.md`
+- `protonemedia/laravel-eloquent-scope-as-select.` helps you work with Laravel Eloquent Scope As Select in Laravel.
+- Always activate the `laravel-eloquent-scope-as-select-development` skill when working with Laravel Eloquent Scope As Select configuration, integration, or any code that relies on this package.
