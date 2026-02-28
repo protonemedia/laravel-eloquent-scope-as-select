@@ -1,6 +1,6 @@
 # Laravel Eloquent Scope as Select Reference
 
-Complete reference for `protonemedia/laravel-eloquent-scope-as-select`. Full documentation: https://github.com/protonemedia/laravel-eloquent-scope-as-select#readme
+Complete reference for protonemedia/laravel-eloquent-scope-as-select. Full documentation: https://github.com/protonemedia/laravel-eloquent-scope-as-select#readme
 
 ## Start Here
 - README / docs: https://github.com/protonemedia/laravel-eloquent-scope-as-select#readme
