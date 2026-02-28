@@ -1,10 +1,10 @@
-{{-- Laravel Eloquent Scope as Select Guidelines for AI Code Assistants --}}
-{{-- Source: https://github.com/protonemedia/laravel-eloquent-scope-as-select --}}
-{{-- License: MIT | (c) ProtoneMedia --}}
+{-- Laravel Eloquent Scope As Select Guidelines for AI Code Assistants --}
+{-- Source: https://github.com/protonemedia/laravel-eloquent-scope-as-select --}
+{-- License: MIT | (c) ProtoneMedia --}
 
-## Laravel Eloquent Scope as Select
+## Laravel Eloquent Scope As Select
 
-- Adds a query builder macro to reuse Eloquent scopes/constraints as boolean select subqueries.
-- Always activate the `laravel-eloquent-scope-as-select-development` skill when making package-specific changes.
-- For macro registration, API shortcuts, and examples, consult:
+- This project uses **Laravel Eloquent Scope As Select** (ProtoneMedia) in a Laravel application.
+- Activate the **`laravel-eloquent-scope-as-select-development`** skill when you are **integrating, configuring, or using** this package in app code (controllers, jobs, tests, config, routes, Blade, etc.).
+- Use the reference doc for the package’s public API and common recipes:
   - `resources/boost/skills/laravel-eloquent-scope-as-select-development/references/laravel-eloquent-scope-as-select-guide.md`

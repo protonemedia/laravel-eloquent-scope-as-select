@@ -137,9 +137,3 @@ Post::query()
 - **Macro registration is required** (see above).
 - **SQL performance:** scope-as-select adds subqueries; watch for N+1-like query cost in SQL.
 - **Scope side-effects:** scopes should be “pure” query constraints; avoid scopes that select/modify columns in surprising ways.
-
-## Testing
-
-```bash
-composer test
-```

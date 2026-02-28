@@ -1,20 +1,37 @@
 ---
 name: laravel-eloquent-scope-as-select-development
-description: Development guidance for protonemedia/laravel-eloquent-scope-as-select (scope-as-subquery macro).
+description: Application integration guidance for protonemedia/laravel-eloquent-scope-as-select.
 license: MIT
 metadata:
   author: ProtoneMedia
   source: https://github.com/protonemedia/laravel-eloquent-scope-as-select
 ---
 
-# Laravel Eloquent Scope as Select Development
+# Laravel Eloquent Scope As Select
 
-Use this skill when changing code/docs/tests in `protonemedia/laravel-eloquent-scope-as-select`.
+Guidance for **application developers** using `protonemedia/laravel-eloquent-scope-as-select` in a Laravel app.
 
-## Workflow
-1. Treat the README as the source of truth for macro registration and query semantics.
-2. Consult `references/laravel-eloquent-scope-as-select-guide.md` for supported shortcuts (string/array/dynamic scopes).
-3. Be careful: small SQL changes can affect performance and correctness.
+## When to Activate
+
+- You’re adding this package to an app, wiring it into routes/controllers/jobs/commands, or writing tests that use it.
+- You’re debugging runtime behaviour coming from this package (configuration, environment requirements, expected outputs).
+
+## Scope
+
+- Focus on **how to use the package’s public API** from a Laravel application.
+- Prefer patterns shown in the README and reference doc.
+
+## Do
+
+- Follow the package’s documented configuration steps (publishing config, env vars, middleware, etc.).
+- Provide copy-pastable examples that compile in a typical Laravel project.
+- Call out common pitfalls (permissions, queueing, test fakes, disk configuration) when relevant.
+
+## Don’t
+
+- Don’t suggest changing this package’s internal source code unless the user explicitly says they are contributing to the package.
+- Don’t invent undocumented methods/options; stick to the README/reference.
 
 ## Reference
+
 - references/laravel-eloquent-scope-as-select-guide.md
