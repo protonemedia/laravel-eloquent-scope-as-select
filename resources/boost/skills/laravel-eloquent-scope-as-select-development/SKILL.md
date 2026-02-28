@@ -1,6 +1,6 @@
 ---
 name: laravel-eloquent-scope-as-select-development
-description: Development guidance for protonemedia/laravel-eloquent-scope-as-select. Expose Eloquent scopes as selectable query constraints.
+description: Development guidance for protonemedia/laravel-eloquent-scope-as-select (scope-as-subquery macro).
 license: MIT
 metadata:
   author: ProtoneMedia
@@ -9,18 +9,12 @@ metadata:
 
 # Laravel Eloquent Scope as Select Development
 
-## Overview
-Use this skill when changing package code, docs, tests, or release tooling for protonemedia/laravel-eloquent-scope-as-select.
-
-## When to Activate
-- You are modifying code in this repository.
-- You are reviewing/triaging issues or PRs for this package.
-- You are preparing a release (version bump, tag, changelog).
+Use this skill when changing code/docs/tests in `protonemedia/laravel-eloquent-scope-as-select`.
 
 ## Workflow
-1. Skim the README / docs to confirm the public contract.
-2. Read references/laravel-eloquent-scope-as-select-guide.md for common patterns and pitfalls.
-3. Keep changes small, add/update tests when behavior changes, and avoid breaking API changes.
+1. Treat the README as the source of truth for macro registration and query semantics.
+2. Consult `references/laravel-eloquent-scope-as-select-guide.md` for supported shortcuts (string/array/dynamic scopes).
+3. Be careful: small SQL changes can affect performance and correctness.
 
-## References
+## Reference
 - references/laravel-eloquent-scope-as-select-guide.md

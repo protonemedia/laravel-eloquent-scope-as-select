@@ -4,5 +4,7 @@
 
 ## Laravel Eloquent Scope as Select
 
-- Expose Eloquent scopes as selectable query constraints.
+- Adds a query builder macro to reuse Eloquent scopes/constraints as boolean select subqueries.
 - Always activate the `laravel-eloquent-scope-as-select-development` skill when making package-specific changes.
+- For macro registration, API shortcuts, and examples, consult:
+  - `resources/boost/skills/laravel-eloquent-scope-as-select-development/references/laravel-eloquent-scope-as-select-guide.md`
