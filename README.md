@@ -13,13 +13,13 @@ Stop duplicating your Eloquent query scopes and constraints in PHP. This package
 ## Requirements
 
 * PHP 8.2+
-* Laravel 11.0
+* Laravel 10.0
 
 This package is tested with GitHub Actions using MySQL 8.0, PostgreSQL 10.8 and SQLite.
 
 ## Features
 
-* Add a subquery based on a [query scope](https://laravel.com/docs/11.x/eloquent#query-scopes).
+* Add a subquery based on a [query scope](https://laravel.com/docs/8.x/eloquent#query-scopes).
 * Add a subquery using a Closure.
 * Shortcuts for calling scopes by using a string or array.
 * Support for more than one subquery.
@@ -103,6 +103,7 @@ The method has an optional third argument that flips the result.
 ```php
 Post::addScopeAsSelect('is_not_announcement', ['ofType' => 'announcement'], false)->get();
 ```
+
 
 ## Usage
 
@@ -270,7 +271,6 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Other Laravel packages
 
-- [Inertia Modal](https://inertiaui.com/inertia-modal/docs/introduction): With Inertia Modal, you can easily open any route in a Modal or Slideover without having to change anything about your existing routes or controllers.
 * [`Inertia Table`](https://inertiaui.com/inertia-table?utm_source=github&utm_campaign=laravel-eloquent-scope-as-select): The Ultimate Table for Inertia.js with built-in Query Builder.
 * [`Laravel Blade On Demand`](https://github.com/protonemedia/laravel-blade-on-demand): Laravel package to compile Blade templates in memory.
 * [`Laravel Cross Eloquent Search`](https://github.com/protonemedia/laravel-cross-eloquent-search): Laravel package to search through multiple Eloquent models.
@@ -298,4 +298,3 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 ## Treeware
 
 This package is [Treeware](https://treeware.earth). If you use it in production, then we ask that you [**buy the world a tree**](https://plant.treeware.earth/pascalbaljetmedia/laravel-eloquent-scope-as-select) to thank us for our work. By contributing to the Treeware forest you’ll be creating employment for local families and restoring wildlife habitats.
-
