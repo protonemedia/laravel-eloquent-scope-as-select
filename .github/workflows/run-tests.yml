@@ -12,7 +12,7 @@ jobs:
       fail-fast: true
       matrix:
         php: [8.5, 8.4, 8.3, 8.2]
-        laravel: ["11.*", "12.*"]
+        laravel: ['11.*', '12.*', '13.*']
         db: [mysql, postgres, sqlite]
         dependency-version: [prefer-lowest, prefer-stable]
         include:
@@ -20,6 +20,11 @@ jobs:
             testbench: ^9.10
           - laravel: 12.*
             testbench: ^10.0
+          - laravel: 13.*
+            testbench: ^11.0
+        exclude:
+          - laravel: 13.*
+            php: 8.2
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - DB ${{ matrix.db }} - ${{ matrix.dependency-version }}
 
@@ -69,7 +74,7 @@ jobs:
 
       - name: Execute tests (MySQL)
         run: vendor/bin/phpunit
-        if: "${{ matrix.db == 'mysql' }}"
+        if: ${{ matrix.db == 'mysql' }}
         env:
           DB_DATABASE: protone_media_db_test_mysql
           DB_USERNAME: protone_media_db_test
@@ -78,7 +83,7 @@ jobs:
 
       - name: Execute tests (PostgreSQL)
         run: vendor/bin/phpunit
-        if: "${{ matrix.db == 'postgres' }}"
+        if: ${{ matrix.db == 'postgres' }}
         env:
           DB_CONNECTION: pgsql
           DB_DATABASE: protone_media_db_test_postgres
@@ -88,7 +93,7 @@ jobs:
 
       - name: Execute tests (SQLite)
         run: vendor/bin/phpunit
-        if: "${{ matrix.db == 'sqlite' }}"
+        if: ${{ matrix.db == 'sqlite' }}
         env:
           DB_CONNECTION: sqlite
-          DB_DATABASE: ":memory:"
+          DB_DATABASE: :memory:
